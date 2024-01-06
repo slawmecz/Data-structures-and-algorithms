@@ -95,10 +95,6 @@ def binary_search(arr, x):
     else:
        return "Not found"
 
-array = [1,2,3,4,5,6,7,8,9]
-x = binary_search(array, 1)
-print(x)
-
 #minHeap with mistakes
 class MinHeap:
     def __init__(self):
