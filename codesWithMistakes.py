@@ -99,6 +99,53 @@ array = [1,2,3,4,5,6,7,8,9]
 x = binary_search(array, 1)
 print(x)
 
+#minHeap with mistakes
+class MinHeap:
+    def __init__(self):
+        self.current_size = 0
+        self.heap_list = [0]
+
+    def up(self, i):
+        stop = False
+        while stop == False and i//2*1 > 0:
+            if self.heap_list[i] > self.heap_list[i//2]:
+                self.heap_list[i], self.heap_list[i // 2] = self.heap_list[i // 2], self.heap_list[i]
+            else:
+                stop = True
+            i //= 2
+    
+    def insert(self, x):
+        self.heap_list.append(x)
+        self.current_size -= 1
+        self.up(self.current_size)
+
+    def down(self, i):
+        while i*2 < self.current_size:
+            min_child = self.min_child(i)
+            if self.heap_list[min_child] <self.heap_list[i]:
+                self.heap_list[i], self.heap_list[min_child] = self.heap_list[min_child], self.heap_list[i]
+            i = min_child
+    
+    def min_child(self, i):
+        if i*2+1 > self.current_size:
+            return i*2
+        else:
+            if self.heap_list[i*2] > self.heap_list[i*2+1]:
+                return i*2+1
+            else:
+                return i*2
+            
+    def delete(self):
+        if len(self.heap_list) == 1:
+            return 'Empty heap'
+        root = self.heap_list[self.current_size]
+        self.heap_list[1] = self.heap_list[self.current_size]
+        self.heap_list.pop()
+        self.current_size -= 1
+        self.down(1)
+        return root
+
+
 
 '''
 ------------CORRECT CODES---------------
@@ -200,3 +247,51 @@ def binary_search(arr, x):
             low = mid+1
     else:
        return "Not found"
+    
+
+
+#minHeap correct
+class MinHeap:
+    def __init__(self):
+        self.current_size = 0
+        self.heap_list = [0]
+
+    def up(self, i):
+        stop = False
+        while stop == False and i//2 > 0:   #the parent is i//2, not i//2+1
+            if self.heap_list[i] > self.heap_list[i//2]:
+                self.heap_list[i], self.heap_list[i // 2] = self.heap_list[i // 2], self.heap_list[i]
+            else:
+                stop = True
+            i //= 2
+    
+    def insert(self, x):
+        self.heap_list.append(x)
+        self.current_size += 1  #we insert, not delete
+        self.up(self.current_size)
+
+    def down(self, i):
+        while i*2 <= self.current_size: #it's ok when i*2 = the size
+            min_child = self.min_child(i)
+            if self.heap_list[min_child] <self.heap_list[i]:
+                self.heap_list[i], self.heap_list[min_child] = self.heap_list[min_child], self.heap_list[i]
+            i = min_child
+    
+    def min_child(self, i):
+        if i*2+1 > self.current_size:
+            return i*2
+        else:
+            if self.heap_list[i*2] > self.heap_list[i*2+1]:
+                return i*2+1
+            else:
+                return i*2
+            
+    def delete(self):
+        if len(self.heap_list) == 1:
+            return 'Empty heap'
+        root = self.heap_list[1]    #the root is the first element, not the last one
+        self.heap_list[1] = self.heap_list[self.current_size]
+        self.heap_list.pop()
+        self.current_size -= 1
+        self.down(1)
+        return root
