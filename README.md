@@ -1,2 +1,2 @@
 # Data-structures-and-algorithms
-Sorting, searching, heaps
+Sorting and binary searching
