@@ -164,8 +164,10 @@ def selection_sort(arr):
         min = ind
         for y in range(ind+1, len(arr)):
             if arr[y] < arr[min]:
-                arr[min] = arr[y]         # here we want to overwrite the indexes, not the actual values
+                min = y         # here we want to overwrite the indexes, not the actual values
         arr[ind], arr[min] = arr[min], arr[ind]
+
+
 
 #merge_sort correct
 def merge(arr, l, m, r):
